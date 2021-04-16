@@ -47,8 +47,8 @@ int main(int argc, char *argv[])
 
     hmm<float> m(4, 12);
     // encode a c g t to 0, 1, 2, 3 and store as a bit array
-    const auto train_c = compress(train);
-    const auto test_c = compress(test);
+    const auto train_c = compress_new(train);
+    const auto test_c = compress_new(test);
     // print("{}->{}\n", train.size(), train_c.size());
 
     std::mt19937 gen(10);

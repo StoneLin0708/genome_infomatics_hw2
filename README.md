@@ -78,3 +78,16 @@ It cost 0.02 sec in total for all train and test on i7-8700
 
 ## Program note
 *  I'm using one int32_t to store 16 sequence
+
+## Encoding Method
+|   |0|1|2|3|
+|---|-|-|-|-|
+|old|a|c|g|t|
+|new|a|c|t|g|
+
+* Test on "NC_000007.14 Homo sapiens chromosome 7, GRCh38.p13 Primary Assembly" about 150M
+
+|         | mm|hmm|
+|---------|---|---|
+|old (sec)|  2|  1|
+|new (sec)|1.5|0.6|

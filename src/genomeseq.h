@@ -45,6 +45,10 @@ std::vector<uint32_t> compress(const std::string &data);
 
 std::string decompress(const std::vector<uint32_t> &data, size_t N);
 
+std::vector<uint32_t> compress_new(const std::string &data);
+
+std::string decompress_new(const std::vector<uint32_t> &data, size_t N);
+
 std::string read_as_str(const std::string path);
 
 inline uint8_t get_seq(const std::vector<uint32_t> &seq, size_t i)

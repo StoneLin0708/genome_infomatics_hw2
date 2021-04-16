@@ -9,3 +9,6 @@ gtest_discover_tests(test_matrix)
 add_executable(test_hmm test_hmm.cc)
 target_link_libraries(test_hmm genomeseq fmt gtest_main)
 gtest_discover_tests(test_hmm)
+
+add_executable(bench_genomeseq bench_genomeseq.cc)
+target_link_libraries(bench_genomeseq genomeseq fmt benchmark::benchmark)

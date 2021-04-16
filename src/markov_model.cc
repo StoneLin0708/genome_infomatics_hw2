@@ -49,8 +49,8 @@ int main(int argc, char *argv[])
     const string train = read_as_str(argv[1]);
     const string test = read_as_str(argv[2]);
     // encode a c g t to 0, 1, 2, 3 and store as a bit array
-    const auto train_c = compress(train);
-    const auto test_c = compress(test);
+    const auto train_c = compress_new(train);
+    const auto test_c = compress_new(test);
     // print("{}->{}\n", train.size(), train_c.size());
 
     for (int order = 0; order <= 2; ++order) {

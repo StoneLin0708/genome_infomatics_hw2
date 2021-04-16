@@ -17,6 +17,10 @@ FetchContent_Declare(
 FetchContent_MakeAvailable(googletest)
 include(GoogleTest)
 
+set(BENCHMARK_ENABLE_TESTING OFF)
+add_subdirectory(benchmark)
+
 enable_testing()
+
 add_subdirectory(src)
 add_subdirectory(test)

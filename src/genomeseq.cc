@@ -69,19 +69,50 @@ vector<uint32_t> compress(const string &data)
 
 string decompress(const vector<uint32_t> &data, size_t N)
 {
+    const char map[] = {'a', 'c', 'g', 't'};
     string res;
     res.resize(N);
-    for (int i = 0; i < N; ++i) {
-        const auto g = 3 & (data[i / 16] >> ((i % 16) * 2));
-        if (g == 0) {
-            res[i] = 'a';
-        } else if (g == 1) {
-            res[i] = 'c';
-        } else if (g == 2) {
-            res[i] = 'g';
-        } else {  // (c=='t')
-            res[i] = 't';
-        }
+    for (int i = 0; i < N; ++i)
+        res[i] = map[get_seq(data, i)];
+    return res;
+}
+
+/*
+ * a 110 0001 00
+ * c 110 0011 01
+ * t 111 0100 10
+ * g 110 0111 11
+ */
+
+vector<uint32_t> compress_new(const string &data)
+{
+    // it could be done much faster with bitmask, but ...
+    const auto N = data.size();
+    vector<uint32_t> res(N / 16 + 1, 0);
+    for (int i = 0; i < N / 16; ++i) {
+        auto &r = res[i];
+        auto v0 = *(uint64_t *) &data[i * 16] >> 1;  // 8 * 8
+        for (int k = 0; k < 8; ++k, v0 >>= 8)
+            r |= (v0 & 0x3) << 2 * k;
+        auto v1 = *(uint64_t *) &data[i * 16 + 8] >> 1;  // 8 * 8
+        for (int k = 8; k < 16; ++k, v1 >>= 8)
+            r |= (v1 & 0x3) << 2 * k;
     }
+    if (N & 15) {
+        const int i = N / 16;
+        auto &r = res[i];
+        for (int j = 0; j < N % 16; ++j)
+            r |= (3 & (data[i * 16 + j] >> 1)) << (j * 2);
+    }
+    return res;
+}
+
+string decompress_new(const vector<uint32_t> &data, size_t N)
+{
+    const char map[] = {'a', 'c', 't', 'g'};
+    string res;
+    res.resize(N);
+    for (int i = 0; i < N; ++i)
+        res[i] = map[get_seq(data, i)];
     return res;
 }
